@@ -74,7 +74,7 @@ if (isset($_POST['itemName'])) {
                 <input type="submit" value="Submit" class="btn btn-default">
                 <br /><br />
             </form>
-            
+            <?= sampleData(); ?>
             <!-- Display Search Results -->
             <?= displayResults() ?>
             
