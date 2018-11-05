@@ -49,14 +49,16 @@ function displaySearchResults()
         echo"<h3>Products Found: </h3>";
         $namedParamters = array();
         
+        //$sql = "SELECT * FROM sc_product WHERE 1";
+        
         // checks if user wants ONLY on sale items
-        if ($_GET['sale'] == 'on')
+        if ($_GET['sale'] == 'y')
         {
-            $sql = "SELECT * FROM sc_sale WHERE 1";
+            $sql  = "SELECT * from sc_product NATURAL JOIN sc_sale WHERE 1";
         }
         else
         {
-            $sql = "SELECT * FROM sc_product WHERE 1";
+            $sql = "SELECT * from sc_product p LEFT JOIN sc_sale s ON p.prodId=s.prodId WHERE 1";
         }
         
         if (!empty($_GET['product']))
@@ -86,15 +88,22 @@ function displaySearchResults()
             }
         }
         
-        
         $statement = $dbConn->prepare($sql);
         $statement->execute($namedParamters);
         $records = $statement->fetchAll(PDO::FETCH_ASSOC);
         
         foreach ($records as $record)
         {
-            echo $record["team"] . " " . $record["description"] . " $" . $record["price"] . "<br/>" . "<img src='" . $record["image"] . "width ='200' height='400'>" . "<br/>";
-            echo "<a href = 'display.php'>" . $record["team"] . " " . $record["description"] . " $" . $record["price"] . "<br/>" . "<img src='" . $record["image"] . "width ='200' height='400'>" . "<br/></a>";
+            echo $record["team"] . " " . $record["description"];
+            
+            if ($record["salePrice"] == NULL)
+            {
+                echo " $" . $record["price"] . "<br/> <img src='" . $record["image"] . "width ='200' height='400'>" . "<br/>";
+            }
+            else
+            {
+                echo "<strike> $" . $record["price"] ."</strike> $" .  $record["salePrice"] . "<br/> <img src='" . $record["image"] . "width ='200' height='400'>" . "<br/>";
+            }
         }
     }
 }
