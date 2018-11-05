@@ -33,6 +33,8 @@ function displayCategories()
     $statement -> execute();
     $records = $statement -> fetchAll();
     
+    echo "<option value=''>Select One</option>";
+    
     foreach ($records as $record)
     {
         echo "<option value='". $record['catId'] ."'>" . $record['catName'] . "</option>";
