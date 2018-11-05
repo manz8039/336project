@@ -24,6 +24,81 @@ function sampleData() {
     print_r($records);
 }
 
+function displayCategories()
+{
+    global $dbConn;
+    
+    $sql = "SELECT * FROM sc_category ORDER BY catName";
+    $statement = $dbConn -> prepare($sql);
+    $statement -> execute();
+    $records = $statement -> fetchAll();
+    
+    foreach ($records as $record)
+    {
+        echo "<option value='". $record['catId'] ."'>" . $record['catName'] . "</option>";
+    }
+}
+
+function displaySearchResults()
+{
+    global $dbConn;
+    
+    if (isset($_GET['searchForm']))
+    {
+        // checks is user has subbmitted form
+        echo"<h3>Products Found: </h3>";
+        $namedParamters = array();
+        
+        // checks if user wants ONLY on sale items
+        if ($_GET['sale'] == 'on')
+        {
+            $sql = "SELECT * FROM sc_sale WHERE 1";
+        }
+        else
+        {
+            $sql = "SELECT * FROM sc_product WHERE 1";
+        }
+        
+        if (!empty($_GET['product']))
+        {
+            // checks if user has typed something in product text box
+            $sql .= " AND description LIKE :description";
+            $namedParamters[":description"] = "%" . $_GET['product'] . "%";
+        }
+        
+        if (!empty($_GET['category']))
+        {
+            // checks if user has selected a category
+            $sql .= " AND catId = :catId";
+            $namedParamters[":catId"] = $_GET['category'];
+        }
+        
+        if (isset($_GET['sort']))
+        {
+            // checks how to sort
+            if ($_GET['sort'] == "cheap")
+            {
+                $sql .= " ORDER BY price ASC";
+            }
+            else
+            {
+                $sql .= " ORDER BY price DESC";
+            }
+        }
+        
+        
+        $statement = $dbConn->prepare($sql);
+        $statement->execute($namedParamters);
+        $records = $statement->fetchAll(PDO::FETCH_ASSOC);
+        
+        foreach ($records as $record)
+        {
+            echo $record["team"] . " " . $record["description"] . " $" . $record["price"] . "<br/>" . "<img src='" . $record["image"] . "width ='200' height='400'>" . "<br/>";
+        }
+    }
+}
+
+
 function displayCartCount() {
     echo count($_SESSION['cart']);
 }
