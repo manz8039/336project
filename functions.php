@@ -56,11 +56,11 @@ function displaySearchResults()
         // checks if user wants ONLY on sale items
         if ($_GET['sale'] == 'y')
         {
-            $sql  = "SELECT * from sc_product NATURAL JOIN sc_sale WHERE 1";
+            $sql  = "SELECT * from sc_product p INNER JOIN sc_sale s ON p.prodId = s.productId WHERE 1";
         }
         else
         {
-            $sql = "SELECT * from sc_product p LEFT JOIN sc_sale s ON p.prodId=s.prodId WHERE 1";
+            $sql = "SELECT * from sc_product p LEFT JOIN sc_sale s ON p.prodId = s.productId WHERE 1";
         }
         
         if (!empty($_GET['product']))
