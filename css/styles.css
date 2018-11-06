@@ -1,0 +1,19 @@
+.filters
+{
+    margin: 0 auto;
+    text-align: center;
+    border: solid;
+    border-radius: 10px;
+    border-color: #275399;
+    background-color: #b6fad9;
+}
+
+input 
+{
+     color: #e93939;
+}
+
+.results
+{
+    background-color: #b6fad9;
+}

@@ -40,11 +40,12 @@ if (isset($_POST['itemName'])) {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/styles.css" type="text/css" />
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <title>Products Page</title>
+        <title>Jersey Store</title>
     </head>
     <body>
     <div class='container'>
@@ -54,29 +55,45 @@ if (isset($_POST['itemName'])) {
             <nav class='navbar navbar-default - navbar-fixed-top'>
                 <div class='container-fluid'>
                     <div class='navbar-header'>
-                        <a class='navbar-brand' href='#'>Shopping Land</a>
+                        <a class='navbar-brand' href='#'>Jersey Store</a>
                     </div>
                     <ul class='nav navbar-nav'>
                         <li><a href='index.php'>Home</a></li>
                         <li><a href='scart.php'>
-                            <span class='glyphicon glyphicon-shopping-cart' aria-hidden='true'></span>Cart: <?= displayCartCount(); ?> </a></li>
+                            <span class='glyphicon glyphicon-shopping-cart' aria-hidden='true'></span> Cart: <?= displayCartCount(); ?> </a></li>
                     </ul>
                 </div>
             </nav>
             <br /> <br /> <br />
             
             <!-- Search Form -->
-            <form enctype="text/plain">
-                <div class="form-group">
-                    <label for="pName">Product Name</label>
-                    <input type="text" class="form-control" name="query" id="pName" placeholder="Name">
-                </div>
-                <input type="submit" value="Submit" class="btn btn-default">
-                <br /><br />
-            </form>
-            <?= sampleData(); ?>
+            <div class="filters">
+                <h2>
+                    Shop for jerseys below
+                </h2>
+                <form>
+                    Search: 
+                    <input type="text" name="product"/> <br>
+                    
+                    Category:
+                        <select name="category">
+                            <?= displayCategories() ?>
+                        </select>
+                    <br>
+                    
+                    Sort price by:
+                    <input type="radio" name="sort" value="cheap"/> Ascending
+                    <input type="radio" name="sort" value="expensive"/> Descending <br>
+                    
+                    Check to display <strong>ONLY</strong>  on sale items
+                    <input type='checkbox' name='sale' value='y'> <br><br>
+                    
+                    <input type="submit" value="Shop" name="searchForm"/>
+                </form>
+                <br>
+            </div>
             <!-- Display Search Results -->
-            <?= displayResults() ?>
+            <?= displaySearchResults() ?>
             
         </div>
     </div>
