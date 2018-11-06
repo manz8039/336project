@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 include 'functions.php';
 
@@ -77,6 +78,10 @@ function displayProduct($id) {
         print '<img src="'.$product['image'].'">';
         print '<div class="description">'.$product['description'].'</div>';
         print '<div class="price">$'.$product['price'].'</div>';
+        
+        $_SESSION['image'] = $product['image'];
+        $_SESSION['team'] = $product['team'];
+        $_SESSION['price'] = $product['price'];
         
     }
     return $row;

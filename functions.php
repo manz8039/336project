@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 function startConnection() {
     // Creating connection
     $host = "us-cdbr-iron-east-01.cleardb.net";
@@ -99,7 +99,7 @@ function displaySearchResults()
 //<<<<<<< HEAD
           print_r($record);
             echo $record["team"] . " " . $record["description"] . " $" . $record["price"] . "<br/>" . "<img src='" . $record["image"] . "width ='200' height='400'>" . "<br/>";
-            echo "<a href = 'display.php?id=".$record['prodId']."'>" . $record["team"] . " " . $record["description"] . " $" . $record["price"] . "<br/>" . "<img src='" . $record["image"] . " width ='200' height='400'>" . "</a><br/>";
+            echo "<a onclick='openModal()' target='productModal' href = 'display.php?id=".$record['prodId']."'>" . $record["team"] . " " . $record["description"] . " $" . $record["price"] . "<br/>" . "<img src='" . $record["image"] . " width ='200' height='400'>" . "</a><br/>";
 //=======
            // echo $record["team"] . " " . $record["description"];
             
@@ -157,20 +157,20 @@ function displayResults() {
 }
 function displayCart() {
     if (isset($_SESSION['cart'])) {
-        echo "<table class='table>";
+        echo "<table class='table'>";
         foreach ($_SESSION['cart'] as $item) {
-            $itemName = $item['name'];
+            $itemName = $item['team'];
             $itemPrice = $item['price'];
             $itemImage = $item['image'];
-            $itemId = $item['id'];
-            $itemQuantity = $item['quantity'];
+            //$itemId = $item['id'];
+            //$itemQuantity = $item['quantity'];
             
             echo "<tr>";
-            echo "<td><img src='$itemImage'></td>";
+            echo "<td><img src='$itemImage' width='100' height='100'></td>";
             echo "<td><h4>$itemName</h4></td>";
             echo "<td><h4>$$itemPrice</h4></td>";
             
-            echo "<form method='post'>";
+            /*echo "<form method='post'>";
             echo "<input type='hidden' name='itemId' value='$itemId'>";
             echo "<td><input type='text' name='update' class='form-control' placeHolder='$itemQuantity'></td>";
             echo "<td><button class='btn btn-danger'>Update</button></td>";
@@ -179,10 +179,24 @@ function displayCart() {
             echo "<form method='post'>";
             echo "<input type='hidden' name='removeId' value='$itemId'>";
             echo "<td><button class='btn btn-danger'>Remove</button></td>";
-            echo "</form>";
+            echo "</form>";*/
             echo "</tr>";
         }
         echo "</table>"; 
+    }
+}
+function updateCart(){
+    if(!empty($_SESSION['image'])){
+        $newItem = array();
+        $newItem['image'] = $_SESSION['image'];
+        $newItem['team'] = $_SESSION['team'];
+        $newItem['price'] = $_SESSION['price'];
+                    
+        $_SESSION['cart'][] = $newItem;
+        
+        unset($_SESSION['image']);
+        unset($_SESSION['team']);
+        unset($_SESSION['price']);
     }
 }
 ?>

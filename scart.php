@@ -2,6 +2,10 @@
 include 'functions.php';
 session_start();
 
+if (isset($_GET['clear'])){
+    unset($_SESSION['cart']);
+}
+
 if (isset($_POST['removeId'])) {
     foreach ($_SESSION['cart'] as $itemKey => $item) {
         if ($item['id'] == $_POST['removeId']) {
@@ -38,7 +42,7 @@ if (isset($_POST['itemId'])) {
                 <nav class='navbar navbar-default - navbar-fixed-top'>
                     <div class='container-fluid'>
                         <div class='navbar-header'>
-                            <a class='navbar-brand' href='#'>Shopping Land</a>
+                            <a class='navbar-brand' href='#'>Jersey Store</a>
                         </div>
                         <ul class='nav navbar-nav'>
                         <li><a href='index.php'>Home</a></li>
@@ -51,6 +55,9 @@ if (isset($_POST['itemId'])) {
                 <h2>Shopping Cart</h2>
                 <!-- Cart Items -->
                 <?= displayCart(); ?>
+                <form>
+                    <input type="submit" name="clear" value="Clear cart">
+                </form>
             </div>
         </div>
     </body>
