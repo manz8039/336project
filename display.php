@@ -2,6 +2,7 @@
 
 include 'functions.php';
 
+/*
 // remove this code after you have updated with latest repository
 if(!function_exists('startConnection')) {
     function startConnection() {
@@ -18,26 +19,35 @@ if(!function_exists('startConnection')) {
     }
 $dbConn = startConnection();
     
-}
+}*/
 
 if(!empty($_GET['id'])) {
     $id = intval($_GET['id']);
     $info = displayProduct($id);
-    if($info) {
+    /*if($info) {
         print_r($info);
     
-    }
+    }*/
 } else {
     print 'No valid id';
     die();
 }
 
 
-function displayProduct($id) {
-    $mysqliConn = mysqli_connect('us-cdbr-iron-east-01.cleardb.net','b831dbdd87260c','d170c72e', 'heroku_c149aff39c41e5d');
+function getProduct($id) {
+    global $dbConn;
+    $pdo = $dbConn;
+    //$mysqliConn = mysqli_connect('us-cdbr-iron-east-01.cleardb.net','b831dbdd87260c','d170c72e', 'heroku_c149aff39c41e5d');
     $rows = array();
-    $sql = 'select * from sc_product INNER JOIN sc_category ON sc_product.catid = sc_category.catid WHERE sc_product.prodId = '.$id;
-    $result = mysqli_query($mysqliConn, $sql);
+     
+    $sql = 'select * from sc_product INNER JOIN sc_category '
+        .'ON sc_product.catid = sc_category.catid WHERE sc_product.prodId = :id';//.$id;
+    $query = $pdo->prepare($sql);
+    $query->execute(['id' => $id]); 
+    $result = $query->fetch();
+    return $result;    
+}    
+    //$result = mysqli_query($mysqliConn, $sql);
     /* $host = "us-cdbr-iron-east-01.cleardb.net";
     $username = "b831dbdd87260c";
     $password = "d170c72e";
@@ -53,17 +63,22 @@ function displayProduct($id) {
     /*foreach ($dbConn->query($sql) as $row) {
         $rows[] = $row;
     }*/
-    $row = mysqli_fetch_array($result);
+    //$row = mysqli_fetch_array($result);
+function displayProduct($id) {
+    $row = getProduct($id);
+
     if(!$row) {
         print 'No product matching that id';    
     
     } else {
-        print_r($rows);
+        //print_r($row);
         $product = $row;
         print '<h3>'.$product['team'].'</h3>';
         print '<img src="'.$product['image'].'">';
         print '<div class="description">'.$product['description'].'</div>';
+        print '<div class="price">$'.$product['price'].'</div>';
         
     }
+    return $row;
     
 }

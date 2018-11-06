@@ -94,7 +94,7 @@ function displaySearchResults()
         foreach ($records as $record)
         {
             echo $record["team"] . " " . $record["description"] . " $" . $record["price"] . "<br/>" . "<img src='" . $record["image"] . "width ='200' height='400'>" . "<br/>";
-            echo "<a href = 'display.php'>" . $record["team"] . " " . $record["description"] . " $" . $record["price"] . "<br/>" . "<img src='" . $record["image"] . "width ='200' height='400'>" . "<br/></a>";
+            echo "<a href = 'display.php?id=".$record['prodId']."'>" . $record["team"] . " " . $record["description"] . " $" . $record["price"] . "<br/>" . "<img src='" . $record["image"] . "width ='200' height='400'>" . "<br/></a>";
         }
     }
 }
