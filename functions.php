@@ -96,11 +96,9 @@ function displaySearchResults()
         
         foreach ($records as $record)
         {
-//<<<<<<< HEAD
-          print_r($record);
-            echo $record["team"] . " " . $record["description"] . " $" . $record["price"] . "<br/>" . "<img src='" . $record["image"] . "width ='200' height='400'>" . "<br/>";
+          //print_r($record);
+            //echo $record["team"] . " " . $record["description"] . " $" . $record["price"] . "<br/>" . "<img src='" . $record["image"] . "width ='200' height='400'>" . "<br/>";
             echo "<a onclick='openModal()' target='productModal' href = 'display.php?id=".$record['prodId']."'>" . $record["team"] . " " . $record["description"] . " $" . $record["price"] . "<br/>" . "<img src='" . $record["image"] . " width ='200' height='400'>" . "</a><br/>";
-//=======
            // echo $record["team"] . " " . $record["description"];
             
             if ($record["salePrice"] == NULL)

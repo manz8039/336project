@@ -75,7 +75,7 @@ function displayProduct($id) {
         //print_r($row);
         $product = $row;
         print '<h3>'.$product['team'].'</h3>';
-        print '<img src="'.$product['image'].'">';
+        print "<img src='" . $product['image'] . "' width='200' height='175'>";
         print '<div class="description">'.$product['description'].'</div>';
         print '<div class="price">$'.$product['price'].'</div>';
         
